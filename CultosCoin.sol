@@ -19,6 +19,7 @@ contract Cultos is ERC20, ERC20Burnable, ERC20Capped, Ownable {
         internal
         virtual
         override(ERC20, ERC20Capped)
+        onlyOwner
     {
         super._mint(account, supply_ * (10**decimals()));
     }
