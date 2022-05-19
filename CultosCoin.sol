@@ -1,23 +1,16 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+// SPDX-License-Identifier: Unlicense
+pragma solidity >=0.8.8 <0.8.9;
 
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract CultosCoin is ERC20, ERC20Capped, ERC20Burnable {
-    constructor(uint256 supply_)
-        ERC20("Cultos", "CULTOS")
-        ERC20Capped(supply_ * (10**decimals()))
-        ERC20Burnable()
-    {
-        _mint(msg.sender, supply_);
+contract Cultos is ERC20, ERC20Burnable, Ownable {
+    constructor() ERC20("Cultos", "CULTOS") {
+        _mint(msg.sender, 1000000000 * 10**decimals());
     }
 
-    function _mint(address account, uint256 supply_)
-        internal
-        virtual
-        override(ERC20, ERC20Capped)
-    {
-        super._mint(account, supply_ * (10**decimals()));
+    function mint(address to, uint256 amount) public onlyOwner {
+        _mint(to, amount);
     }
 }
